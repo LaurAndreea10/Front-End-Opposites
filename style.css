@@ -1,0 +1,342 @@
+@import url('https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap');
+
+:root{
+  --pos: 50%;
+  --bg1: #2a0a52;
+  --bg2: #0b0b2e;
+
+  /* Schimbă aici imaginile (orice URL direct de imagine) */
+  --before-img: url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80");
+  --after-img:  url("https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1600&q=80");
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(1000px 700px at 20% 10%, rgba(255,77,157,.22), transparent 55%),
+    radial-gradient(900px 650px at 80% 30%, rgba(76,201,240,.18), transparent 55%),
+    linear-gradient(135deg, var(--bg1), var(--bg2));
+  color: #fff;
+}
+
+.wrap{
+  width: min(960px, 92vw);
+  display: grid;
+  gap: 1.1rem;
+  justify-items: center;
+}
+
+h1{
+  font-family: "Sigmar One", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin: 0;
+  letter-spacing: .5px;
+  position: relative;
+  -webkit-text-stroke: 2px rgba(0,0,0,.55);
+  text-shadow: 0 14px 55px rgba(0,0,0,.45);
+}
+
+/* CSS ::before/::after pe heading */
+h1::before{
+  content: "⏪";
+  display: inline-block;
+  margin-right: .5rem;
+  transform-origin: 50% 70%;
+  animation: wobble 1.25s ease-in-out infinite alternate;
+}
+h1::after{
+  content: "  cpc-before-after";
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: .85rem;
+  -webkit-text-stroke: 0;
+  color: rgba(255,255,255,.88);
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.16);
+  padding: .22rem .6rem;
+  border-radius: 999px;
+  margin-left: .65rem;
+  vertical-align: middle;
+}
+
+@keyframes wobble{
+  from{ transform: rotate(-8deg) translateY(0); }
+  to{ transform: rotate(8deg) translateY(-3px); }
+}
+
+/* --- Compare Card --- */
+.compare{
+  position: relative;
+  width: min(920px, 92vw);
+  aspect-ratio: 16 / 9;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 35px 90px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.10);
+}
+
+/* CSS ::before/::after pe container */
+.compare::before{
+  content: "DRAG / ← →";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 25;
+  font: 800 .85rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: rgba(255,255,255,.9);
+  padding: .45rem .7rem;
+  border-radius: 999px;
+  background: rgba(0,0,0,.28);
+  border: 1px solid rgba(255,255,255,.16);
+  backdrop-filter: blur(10px);
+}
+.compare::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background:
+    radial-gradient(540px 320px at 20% 35%, rgba(255,77,157,.18), transparent 60%),
+    radial-gradient(600px 340px at 75% 55%, rgba(76,201,240,.16), transparent 62%);
+  mix-blend-mode: screen;
+}
+
+/* Layers */
+.layer{
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+/* BEFORE: imagine + “1999 vibe” (scanlines, chroma shift) */
+.before{
+  background-image: var(--before-img);
+  filter: saturate(.7) contrast(1.15) brightness(.92);
+}
+.before::before{
+  content: "BEFORE";
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  font: 900 1rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: .08em;
+  padding: .55rem .8rem;
+  border-radius: 14px;
+  background: rgba(0,0,0,.32);
+  border: 1px solid rgba(255,255,255,.16);
+  color: rgba(255,255,255,.92);
+  backdrop-filter: blur(10px);
+}
+.before::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.10) 0 1px, transparent 1px 4px),
+    linear-gradient(90deg, rgba(255,77,157,.14), transparent 35%, rgba(76,201,240,.12));
+  mix-blend-mode: screen;
+  opacity: .42;
+  animation: scan 2.2s ease-in-out infinite;
+}
+@keyframes scan{
+  0%, 100% { transform: translateY(-2%); filter: hue-rotate(0deg); }
+  50% { transform: translateY(2%); filter: hue-rotate(25deg); }
+}
+
+/* AFTER: imagine + glossy glass overlay */
+.after{
+  background-image: var(--after-img);
+  filter: saturate(1.05) contrast(1.05) brightness(1.02);
+  transform: translateZ(0);
+}
+.after::before{
+  content: "AFTER";
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  font: 900 1rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: .08em;
+  padding: .55rem .8rem;
+  border-radius: 14px;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(0,0,0,.08);
+  color: rgba(0,0,0,.82);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 55px rgba(0,0,0,.18);
+}
+.after::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(700px 420px at 30% 35%, rgba(255,255,255,.26), transparent 60%),
+    linear-gradient(120deg, transparent 35%, rgba(255,255,255,.30) 50%, transparent 65%);
+  opacity: .55;
+  transform: translateX(-35%);
+  transition: transform .2s linear;
+}
+
+/* Clip AFTER by position */
+#afterLayer{
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+  transition: clip-path .06s linear;
+}
+
+/* Handle line + knob */
+.handle{
+  position: absolute;
+  top: 0;
+  left: var(--pos);
+  height: 100%;
+  width: 0;
+  z-index: 30;
+  outline: none;
+}
+.handle::before{
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.22), 0 0 26px rgba(255,255,255,.35);
+}
+.knob{
+  position: absolute;
+  left: -24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.94);
+  border: 1px solid rgba(0,0,0,.12);
+  box-shadow: 0 18px 60px rgba(0,0,0,.35);
+  display: grid;
+  place-items: center;
+}
+.knob::before{
+  content: "↔";
+  font: 900 1.1rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: rgba(0,0,0,.75);
+}
+.handle:focus-visible .knob{
+  box-shadow: 0 0 0 4px rgba(76,201,240,.35), 0 18px 60px rgba(0,0,0,.35);
+}
+
+/* UI inserted via JS */
+.note, .legend{
+  width: min(920px, 92vw);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.22);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 60px rgba(0,0,0,.25);
+  font: 500 .95rem/1.35 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: rgba(255,255,255,.92);
+  padding: .9rem 1rem;
+}
+.legend{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem 1rem;
+  justify-content: center;
+  align-items: center;
+}
+.chip{
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .35rem .6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.08);
+}
+.dot{ width: 10px; height: 10px; border-radius: 999px; background: currentColor; }
+
+.controls{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem;
+  justify-content: center;
+}
+
+button{
+  border: none;
+  border-radius: 999px;
+  padding: .8rem 1.1rem;
+  font: 800 .95rem/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  cursor: pointer;
+  transition: transform .15s ease, filter .15s ease;
+}
+button:hover{ transform: translateY(-1px) scale(1.02); }
+button:active{ transform: translateY(0) scale(.99); }
+
+.btn-primary{
+  background: linear-gradient(135deg, #ffd166, #ffb703);
+  color: #1a1a1a;
+}
+.btn-ghost{
+  background: rgba(255,255,255,.14);
+  color: rgba(255,255,255,.92);
+  border: 1px solid rgba(255,255,255,.16);
+}
+
+/* Cursor trail sparkles */
+.sparkle{
+  position: absolute;
+  left: 0; top: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 40;
+  font: 900 14px/1 ui-monospace, Menlo, Consolas, monospace;
+  text-shadow: 0 6px 18px rgba(0,0,0,.35);
+  animation: pop .75s ease-out forwards;
+  filter: drop-shadow(0 10px 22px rgba(255,77,157,.18));
+}
+@keyframes pop{
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.6) rotate(0deg); }
+  20%{ opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.35) rotate(180deg); }
+}
+
+/* Confetti */
+.confetti{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  overflow: hidden;
+}
+.confetti i{
+  position: absolute;
+  top: -12px;
+  width: 10px;
+  height: 16px;
+  border-radius: 3px;
+  opacity: .9;
+  animation: fall 1.2s linear forwards;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,.22));
+}
+@keyframes fall{
+  to{
+    transform: translate(var(--dx), calc(100% + 30px)) rotate(var(--rot));
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+}
